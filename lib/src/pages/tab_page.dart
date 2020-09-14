@@ -34,7 +34,7 @@ class _Navegacion extends StatelessWidget {
 
       builder: (_) => BottomNavyBar(
         selectedIndex: _.paginaActual,
-        containerHeight: 80.0,
+        containerHeight: 55.0,
         iconSize: 32.5,
         showElevation: false,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
