@@ -5,7 +5,7 @@ class UserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: _appbar(),
+      appBar: _appbar(context),
       body: Stack(
         children: [
           ClipPath(
@@ -24,7 +24,8 @@ class UserPage extends StatelessWidget {
             ),
           ),
           SingleChildScrollView(
-            child: _listaUsuarios(context) ,)
+            scrollDirection: Axis.vertical,
+            child: _listaUsuarios(context))
           
         ],
       )
@@ -38,11 +39,19 @@ class UserPage extends StatelessWidget {
 
 
 
-Widget _appbar(){
+Widget _appbar(BuildContext context){
   return AppBar(
     backgroundColor: Colors.red.shade800,
     elevation: 0.0,
-    title: Text('Lista de usuarios',)
+    title: Text('Lista de usuarios',),
+    centerTitle: true,
+    actions: <Widget>[
+      IconButton(
+        icon:Icon(Icons.search, size: 30.0,), 
+        onPressed:(){
+          showSearch(context: context, delegate: Search());
+        },)
+    ],
     // style: TextStyle(color: Colors.black)
 
   );
@@ -57,7 +66,7 @@ Widget _appbar(){
       ["Ignacio Arriagada", "gym", "Al dia"]
     ];
 
-    print(usuarios.length);
+    print("Usuarios length ${ usuarios.length } ");
 
 
     return Container(
@@ -73,18 +82,31 @@ Widget _appbar(){
         child: Container(
           padding: EdgeInsets.symmetric(vertical:15.0, horizontal: 5.0),
           color: Colors.white,
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: usuarios.length,
-            itemBuilder:(context, index) => 
-                ListTile(
-                  title: Text('Sebastian Acuña'), 
-                  subtitle: Text('Gym, Amb'), 
-                  leading:_imgUser(), 
-                  trailing: Text('Al dia'),
+          child:  
+                Column(
+                  children: [
+                    ListTile(
+                          title: Text(usuarios[0][0]), 
+                          subtitle: Text(usuarios[0][1]), 
+                          leading:_imgUser(), 
+                          trailing: Text(usuarios[0][2]),
+                        ),
+                    ListTile(
+                          title: Text(usuarios[0][0]), 
+                          subtitle: Text(usuarios[0][1]), 
+                          leading:_imgUser(), 
+                          trailing: Text(usuarios[0][2]),
+                        ),
+                    ListTile(
+                          title: Text(usuarios[0][0]), 
+                          subtitle: Text(usuarios[0][1]), 
+                          leading:_imgUser(), 
+                          trailing: Text(usuarios[0][2]),
+                        ),
+                  ],
                 ),
-               
-          ),
+                
+          
         ),
       ),
     );
@@ -112,6 +134,41 @@ Widget _appbar(){
   
 }
 
+
+class Search extends SearchDelegate{
+  @override
+  List<Widget> buildActions(BuildContext context) {
+      // TODO: implement buildActions
+      return <Widget>[
+        IconButton(
+          icon: Icon(Icons.close),
+          onPressed: (){
+              query = "";
+          },
+        )
+      ];
+    }
+  
+    @override
+    Widget buildLeading(BuildContext context) {
+      // TODO: implement buildLeading
+      throw UnimplementedError();
+    }
+  
+    @override
+    Widget buildResults(BuildContext context) {
+      // TODO: implement buildResults
+      throw UnimplementedError();
+    }
+  
+    @override
+    Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    throw UnimplementedError();
+  }
+
+
+}
 
 
 
