@@ -1,4 +1,6 @@
 import 'package:club_fitness/src/pages/tab_page.dart';
+import 'package:club_fitness/src/pages/user_detail.dart';
+import 'package:club_fitness/src/theme/temas.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
  
@@ -10,7 +12,12 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Club Fitness',
-      home: TabPage(),
+      theme: temaLight,
+      initialRoute: '/home',
+      getPages: [
+        GetPage(name: '/home', page: ()=>TabPage()),
+        GetPage(name: '/user_detail', page: ()=>UserDetail()),
+      ],
     );
   }
 }

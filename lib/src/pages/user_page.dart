@@ -1,4 +1,8 @@
+import 'package:club_fitness/src/pages/user_detail.dart';
+import 'package:club_fitness/src/search/user_search.dart';
+import 'package:club_fitness/src/utils/painters/user_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UserPage extends StatelessWidget {
   @override
@@ -9,7 +13,7 @@ class UserPage extends StatelessWidget {
       body: Stack(
         children: [
           ClipPath(
-            clipper: MyPainter(),
+            clipper: UserPainter(),
             child:  Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
@@ -26,14 +30,8 @@ class UserPage extends StatelessWidget {
           SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: _listaUsuarios(context))
-          
         ],
       )
-      
-     
-      
-     
-      
     );
   }
 
@@ -49,11 +47,10 @@ Widget _appbar(BuildContext context){
       IconButton(
         icon:Icon(Icons.search, size: 30.0,), 
         onPressed:(){
-          showSearch(context: context, delegate: Search());
+          showSearch(context: context, delegate: UserSearch());
         },)
     ],
     // style: TextStyle(color: Colors.black)
-
   );
 }
 
@@ -88,8 +85,10 @@ Widget _appbar(BuildContext context){
                     ListTile(
                           title: Text(usuarios[0][0]), 
                           subtitle: Text(usuarios[0][1]), 
-                          leading:_imgUser(), 
+                          leading: Hero( tag: 1, child: _imgUser()), 
                           trailing: Text(usuarios[0][2]),
+                          onTap: () => Get.toNamed('user_detail')
+                          
                         ),
                     ListTile(
                           title: Text(usuarios[0][0]), 
@@ -128,108 +127,7 @@ Widget _appbar(BuildContext context){
       )
     );
   }
-
-
-
   
 }
 
 
-class Search extends SearchDelegate{
-  @override
-  List<Widget> buildActions(BuildContext context) {
-      // TODO: implement buildActions
-      return <Widget>[
-        IconButton(
-          icon: Icon(Icons.close),
-          onPressed: (){
-              query = "";
-          },
-        )
-      ];
-    }
-  
-    @override
-    Widget buildLeading(BuildContext context) {
-      // TODO: implement buildLeading
-      throw UnimplementedError();
-    }
-  
-    @override
-    Widget buildResults(BuildContext context) {
-      // TODO: implement buildResults
-      throw UnimplementedError();
-    }
-  
-    @override
-    Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    throw UnimplementedError();
-  }
-
-
-}
-
-
-
-class MyPainter extends CustomClipper<Path>{
-
-
-
-  @override
-  Path getClip( Size size) {
-
-      final height = size.height;
-      final width = size.width;
-
-      final rounded = 50.0;
-      Path mainLine  = Path();
-
-
-
-      mainLine.moveTo(0, 0);
-      mainLine.lineTo(0,  height / 1.5);
-      mainLine.lineTo((width / 2) - rounded , height / 2.5);
-      // mainLine.quadraticBezierTo(width / 2, height / 2.5, 50 , height / 2.5);
-      mainLine.lineTo(width,0);
-
-
-      // mainLine.lineTo(0, height / 4);
-      // mainLine.lineTo(width / 2, height );
-      
-      // mainLine.lineTo(width * 0.5,  height * 0.25);
-      // mainLine.lineTo(width,  0);
-
-
-      // mainLine.lineTo(width, 0);
-
-
-
-
-      // 
-
-      // mainLine.lineTo(0, height / 2);
-      // mainLine.lineTo(width, height / 2);
-      // mainLine.lineTo(width, 0);
-      // mainLine.lineTo(width / 1, height / 1);
-
-
-      // mainLine.quadraticBezierTo(width, 0 / 2, 50, 0); 
-      // mainLine.quadraticBezierTo(width, height, width , height);
-
-
-      // mainLine.addOval(oval)
-
-      // paint.color = Colors.blue.shade600;
-      return mainLine;
-      // canvas.drawPath(mainLine, paint);
-
-    }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
-   return true;
-  }
-  
-}
